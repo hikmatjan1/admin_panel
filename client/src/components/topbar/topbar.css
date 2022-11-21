@@ -1,0 +1,29 @@
+.topbar {
+    background-color: #2272f2;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.topbar h5 {
+    margin-bottom: 0;
+}
+
+.topbar_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbar_wrapper span {
+    cursor: pointer;
+    transition: all ease-in .15s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.topbar_wrapper span:hover {
+    color: crimson;
+}

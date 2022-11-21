@@ -1,10 +1,10 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE } from './types';
+import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOADER } from './types';
 
 const initState = {
     user: JSON.parse(localStorage.getItem('user')) || null,
     isfetching: false,
     error: false,
-    loader: true,
+    loader: false,
 }
 
 const reducer = (state = initState, action) => {
@@ -19,11 +19,16 @@ const reducer = (state = initState, action) => {
                 ...state,
                 error: true
             }
-        // case EXIT:
-        //     return {
-        //         ...state,
-        //         user: null
-        //     }
+        case LOADER:
+            return {
+                ...state,
+                loader: action.payload
+            }
+        case LOGOUT:
+            return {
+                ...state,
+                user: null
+            }
         default: return state
     }
 }

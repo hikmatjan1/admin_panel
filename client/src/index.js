@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { axiosInstance } from './config';
 import { store } from './store/store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 // so'rov headeriga tokenni qo'yib yuborish

@@ -8,6 +8,7 @@ const compression = require('compression');
 const app = express();
 // all routes
 const authRoute = require("./routes/auth");
+const usersRoute = require("./routes/users");
 
 // connect to database
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -29,6 +30,7 @@ app.use(morgan('common'));
 
 // routes
 app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
 
 
 const port = process.env.PORT || 5000;

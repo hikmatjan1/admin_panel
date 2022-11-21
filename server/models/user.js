@@ -20,6 +20,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    isBlock: {
+        type: Boolean,
+        default: false
+    },
+    lastAccessData: {
+        type: Date,
+        default: new Date()
+    }
 }, { timestamps: true, collection: "Users" });
 
 const User = mongoose.model("Users", userSchema);

@@ -33,6 +33,8 @@ router.post("/login", async (req, res) => {
         const compare = await bcrypt.compare(req.body.password, user.password);
         if (compare) {
             // generate jwt token
+            await User.updateOne({ $set: { lastAccessData: new Date() } });
+
             const { password, isAdmin, ...others } = user._doc;
             const token = jwt.sign(others, process.env.JWT_SECRET, {
                 expiresIn: "2h"
