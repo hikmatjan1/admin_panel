@@ -6,14 +6,20 @@
     color: #fff;
 }
 
-.topbar h5 {
+.topbar h5,
+.topbar h6 {
     margin-bottom: 0;
+    cursor: pointer;
 }
 
 .topbar_wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.topbar_wrapper div {
+    gap: 10px;
 }
 
 .topbar_wrapper span {

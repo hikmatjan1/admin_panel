@@ -18,13 +18,26 @@ router.get("/get_all_users", Auths, async (req, res) => {
     }
 });
 
-router.delete("/:userId/:currentUserId", Auths, async (req, res) => {
-    if (mongoose.Types.ObjectId.isValid(req.params.userId)) {
-        const currentUser = await User.findOne({ _id: req.params.currentUserId });
+// delete users
+router.post("/:currentUserId", Auths, async (req, res) => {
+    if (mongoose.Types.ObjectId.isValid(req.params.currentUserId)) {
+        let users = await User.find();
+        const currentUser = users.find(user => user._id.equals(req.params.currentUserId));
         if (currentUser) {
             if (!currentUser.isBlock) {
-                const user = await User.findByIdAndRemove({ _id: req.params.userId });
-                res.status(200).json(user);
+                req.body.usersId.forEach(async userId => {
+                    let user = users.find(user => user._id.equals(userId));
+                    await user.deleteOne();
+                })
+                let resultUsers = [];
+                req.body.usersId.forEach(userId => {
+                    let user = users.find(user => user._id.equals(userId));
+                    if (user) {
+                        const { password, isAdmin, __v, ...others } = user._doc;
+                        resultUsers.push(others);
+                    }
+                })
+                res.status(200).json(resultUsers);
             } else {
                 res.status(200).json(false);
             }
@@ -36,15 +49,25 @@ router.delete("/:userId/:currentUserId", Auths, async (req, res) => {
     }
 })
 
-// update user
-router.patch("/:userId/:currentUserId", async (req, res) => {
-    if (mongoose.Types.ObjectId.isValid(req.params.userId) && mongoose.Types.ObjectId.isValid(req.params.currentUserId)) {
-        const currentUser = await User.findOne({ _id: req.params.currentUserId });
+// update users
+router.patch("/:currentUserId", async (req, res) => {
+    if (mongoose.Types.ObjectId.isValid(req.params.currentUserId)) {
+        let users = await User.find();
+        const currentUser = users.find(user => user._id.equals(req.params.currentUserId));
         if (!currentUser.isBlock) {
-            await User.findByIdAndUpdate({ _id: req.params.userId }, { $set: req.body });
-            const user = await User.findOne({ _id: req.params.userId });
-            const { password, isAdmin, __v, ...others } = user._doc;
-            res.status(200).json(others);
+            req.body.usersId.forEach(async userId => {
+                let user = users.find(user => user._id.equals(userId));
+                user.isBlock = req.body.isBlock;
+                // console.log(user);
+                await user.updateOne({ $set: { isBlock: req.body.isBlock } });
+            })
+            let resultUsers = [];
+            req.body.usersId.forEach(userId => {
+                let user = users.find(user => user._id.equals(userId));
+                const { password, isAdmin, __v, ...others } = user._doc;
+                resultUsers.push(others);
+            })
+            res.status(200).json(resultUsers);
         } else {
             res.status(200).json(false);
         }

@@ -133,29 +133,28 @@
 }
 
 /* search */
-.search {
+.filter_btns {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.search_wrapper {
+
+.filter_btns_inline {
     margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
-.search_wrapper input {
-    padding: 4px;
-    border: 1px solid lightgray;
-    width: 250px;
+.btns {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.search_wrapper input:focus {
-    outline-color: #3498db;
-}
-
-.search_wrapper input::placeholder {
-    font-size: 14px;
+.filter_btns button {
+    margin-left: 5px;
 }
 
 /* Safari */
